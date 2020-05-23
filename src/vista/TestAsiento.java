@@ -39,7 +39,7 @@ public class TestAsiento extends javax.swing.JFrame {
         Random random = new Random();
         int posicionColumna = 5; // Posición inicial del primer elemento
         int posicionFila = 5; // Posicición inicial del primer elemento
-        int cantFilas = 5; // Cantidad de filas que tendra el cuadrado
+        int cantColumnas= 9; // Cantidad de filas que tendra el cuadrado
         int contador = 1; // un acumulador del for each
         // creamos 45 asientos con un estado al azar entre 0 y 1 (Disponible/ocupado)
         //Simulando los datos de la base de datos
@@ -55,12 +55,12 @@ public class TestAsiento extends javax.swing.JFrame {
                 BotonAsiento nuevoAsiento = new BotonAsiento(temp);
                 nuevoAsiento.setSize(128,128);
                 nuevoAsiento.setLocation(posicionColumna, posicionFila);
-                posicionFila = posicionFila + 128;
+                posicionColumna = posicionColumna + 128;
                 // Preguntamos si el residuo del contador es 0 en base a las filas que definimos
                 // Si es así creara las columnas correspondientes :D
-                if(contador%cantFilas == 0){
-                    posicionColumna = posicionColumna+128;
-                    posicionFila = 5;
+                if(contador%cantColumnas== 0){
+                    posicionFila = posicionFila+128;
+                    posicionColumna = 5;
                 }
                 //Añadimos el nuevo elemento al JFrame en sus posición antes asignadas
                 this.add(nuevoAsiento);
