@@ -7,6 +7,7 @@ package modelo;
 
 
 import java.awt.Color;
+import java.awt.Font;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -33,13 +34,18 @@ public class BotonAsiento extends JToggleButton{
         this.SELECCIONADO = new ImageIcon(ImageIO.read(this.getClass().getResource("/vista/imagenes/seleccionado.png")));   
         // Configuramos las imagenes en base al estado del asiento
         this.setIconDefault();
+        this.setText(String.valueOf(this.getAsiento().getNumeroAsiento()));
+        this.setFont(new Font("Arial", Font.BOLD, 50));
+        this.setVerticalTextPosition(this.CENTER);
+        this.setHorizontalTextPosition(this.CENTER);
+        this.setForeground(Color.WHITE);
     }
 
-    private Asiento getAsiento() {
+    public Asiento getAsiento() {
         return asiento;
     }
 
-    public void setAsiento(Asiento asiento) {
+    private void setAsiento(Asiento asiento) {
         this.asiento = asiento;
     }
     

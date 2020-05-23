@@ -5,6 +5,8 @@
  */
 package vista;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.JToggleButton;
 import modelo.Asiento;
@@ -12,6 +14,8 @@ import modelo.BotonAsiento;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,9 +26,12 @@ public class TestAsiento extends javax.swing.JFrame {
     /**
      * Creates new form TestAsiento
      */
+    private List<BotonAsiento> botones;
     public TestAsiento() {
         initComponents();
+        botones = new ArrayList<BotonAsiento>();
         this.crearAsientos();
+        
     }
 
     private void crearAsientos() {
@@ -36,8 +43,7 @@ public class TestAsiento extends javax.swing.JFrame {
         int contador = 1; // un acumulador del for each
         // creamos 45 asientos con un estado al azar entre 0 y 1 (Disponible/ocupado)
         //Simulando los datos de la base de datos
-        for (int i = 0; i < 45; i++) {
-
+        for (int i = 1; i <= 45; i++) {
             asientos.add(
                     new Asiento(i, (byte) random.nextInt(2))
             );
@@ -58,12 +64,45 @@ public class TestAsiento extends javax.swing.JFrame {
                 }
                 //Añadimos el nuevo elemento al JFrame en sus posición antes asignadas
                 this.add(nuevoAsiento);
+                // Añadimos el boton a un arrayList para despues manejarlo
+                this.botones.add(nuevoAsiento);
                 contador++;
             }
             // Definimos el comportamiendo del JFrame
-            this.setSize(128*(45/5)+30, 128*5+50);
+            this.setSize(128*(45/5)+15, 128*5+90);
             this.setLocationRelativeTo(null);
             this.setResizable(false);
+            // Añadimos el boton nuevo a la vista
+            JButton boton = new JButton();
+            boton.setSize(this.getHeight(), 40);
+            boton.setText("Obtener asientos seleccionados");
+            // centramos el boton en base al ancho de la ventan y del mismo boton
+            boton.setLocation(this.getWidth()/2-boton.getWidth()/2, 128*5+10);
+            // le agregamos el evento click al boton
+            boton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    List<Asiento> asientosSeleccionados = new ArrayList<Asiento>();
+                    for(BotonAsiento boton:botones){
+                        if(boton.isSelected()){
+                            asientosSeleccionados.add(boton.getAsiento());
+                        }
+                    }
+                    StringBuffer string = new StringBuffer();
+                    string.append("Cantidad de asientos selecionados %s\n");
+                    for(Asiento temp:asientosSeleccionados){
+                        string.append("Asiento número = "+temp.getNumeroAsiento()+"\n");
+                    }
+                    JOptionPane.showMessageDialog(
+                            null, 
+                            String.format(
+                                    string.toString(),
+                                    asientosSeleccionados.size())
+                    );
+                }
+                
+            });
+            this.add(boton);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
